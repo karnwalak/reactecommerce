@@ -45,44 +45,25 @@ const EditProduct = () => {
   const [category, setCategory] = useState([]);
   const [erroList, setError] = useState([""]);
   let param = useParams();
-  const loadDataOnlyOnce = () => {
+  useEffect(() => {
     axios.get("/get-single-product/" + param.id).then((data) => {
       if (data.data.status === true) {
         setData(data.data.data[0]);
         setCheckbox({
-          'featured':data.data.data[0].featured,
-          'popular':data.data.data[0].popular,
-          'status':data.data.data[0].status
+          featured: data.data.data[0].featured,
+          popular: data.data.data[0].popular,
+          status: data.data.data[0].status,
         });
         setPicture(data.data.data[0].image);
       }
     });
-  };
-  const {
-    id,
-    category_id,
-    slug,
-    name,
-    description,
-    meta_title,
-    meta_keyword,
-    meta_description,
-    selling_price,
-    original_price,
-    quantity,
-    brand,
-    status,
-    featured,
-    popular,
-  } = inputData;
-  useEffect(() => {
-    loadDataOnlyOnce();
+
     axios.get("/fetch-category").then((res) => {
       if (res.data.status === true) {
         setCategory(res.data.data);
       }
     });
-  }, []);
+  }, [param.id]);
 
   const handleInput = (e) => {
     e.persist();
@@ -184,7 +165,6 @@ const EditProduct = () => {
                         </li>
                       </ul>
                       <form onSubmit={submitCategory}>
-                        <input type="hidden" name="id" value={id} />
                         <div className="tab-content" id="myTabContent">
                           <div
                             className="tab-pane card-body border fade show active"
@@ -371,6 +351,7 @@ const EditProduct = () => {
                                 <img
                                   width="20%"
                                   src={"http://127.0.0.1:8000/" + picture}
+                                  alt="Product"
                                 />
                               </div>
                               <div className="form-group col-4 col-md-4 mb-3">

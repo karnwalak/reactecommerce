@@ -27,7 +27,7 @@ const Login = () => {
         localStorage.setItem("username", res.data.username);
         localStorage.setItem("role", res.data.role);
         swal("Success", res.data.message, "success");
-        if (res.data.role == 1){
+        if (res.data.role === 1){
           navigate("/admin");
         }else{
           navigate("/home");

@@ -24,7 +24,7 @@ const Register = () => {
     axios
       .post("/registration", registerInput)
       .then((res) => {
-        if (res.data.status == false) {
+        if (res.data.status === false) {
           setError(res.data.errors);
         } else {
           setError([""]);

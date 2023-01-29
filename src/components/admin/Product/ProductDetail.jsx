@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import swal from "sweetalert";
 import Footer from "../../../layouts/admin/Footer";
 import Navbar from "../../../layouts/admin/Navbar";
 import Sidebar from "../../../layouts/admin/Sidebar";
@@ -9,16 +8,13 @@ import Sidebar from "../../../layouts/admin/Sidebar";
 const ProductDetail = () => {
     const [item, setData] = useState([""]);
     let param = useParams();
-    const loadDataOnlyOnce = () => {
-      axios.get("/get-single-product/"+param.id).then((data) => {
+
+    useEffect(() => {
+      axios.get("/get-single-product/" + param.id).then((data) => {
         if (data.data.status === true) {
           setData(data.data.data[0]);
         }
       });
-    };
-
-    useEffect(() => {
-      loadDataOnlyOnce();
     }, []);
   return (
     <div className="sb-nav-fixed">
@@ -60,6 +56,7 @@ const ProductDetail = () => {
                             <img
                               width="20%"
                               src={"http://127.0.0.1:8000/" + item.image}
+                              alt="Product"
                             />
                           </td>
                         </tr>

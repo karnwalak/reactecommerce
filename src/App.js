@@ -21,6 +21,9 @@ import ViewCategoryCollection from "./components/frontend/Collection/ViewCategor
 import ViewProduct from "./components/frontend/Collection/ViewProduct";
 import ViewSingleProduct from "./components/frontend/Collection/ViewSingleProduct";
 import Cart from "./components/frontend/Collection/Cart";
+import Checkout from "./components/frontend/Collection/Checkout";
+import Orders from "./components/admin/Orders/Orders";
+import OrderDetail from "./components/admin/Orders/OrderDetail";
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 axios.defaults.headers.post["Accept"] = "application/json";
@@ -41,6 +44,10 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/home" element={<Protected Component={Home} />} />
+          <Route
+            path="/checkout"
+            element={<Protected Component={Checkout} />}
+          />
           <Route
             path="/show-cart-item"
             element={<Protected Component={Cart} />}
@@ -80,7 +87,6 @@ function App() {
             path="/admin/edit-category/:id"
             element={<AdminProtected Component={EditCategory} />}
           />
-
           <Route
             path="/admin/add-product"
             element={<AdminProtected Component={AddProduct} />}
@@ -93,10 +99,17 @@ function App() {
             path="/admin/edit-product/:id"
             element={<AdminProtected Component={EditProduct} />}
           />
-
           <Route
             path="/admin/view-product-detail/:id"
             element={<AdminProtected Component={ProductDetail} />}
+          />
+          <Route
+            path="/admin/orders"
+            element={<AdminProtected Component={Orders} />}
+          />
+          <Route
+            path="/admin/view-order-detail/:id"
+            element={<AdminProtected Component={OrderDetail} />}
           />
         </Routes>
       </BrowserRouter>

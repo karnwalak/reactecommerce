@@ -40,7 +40,7 @@ const ViewProduct = () => {
       );
     });
   }else{
-    var showProductList = (
+    showProductList = (
       <div className="col-md-6 text-center">
         <div className="card">
           <div className="card-body">

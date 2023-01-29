@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams,Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Navbar from '../../../layouts/frontend/Navbar';
 import axios from "axios";
 import swal from "sweetalert";
@@ -84,7 +84,7 @@ const ViewSingleProduct = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-4 border-end">
-            <img width="80%" src={"http://127.0.0.1:8000/" + data.image} />
+            <img width="80%" src={"http://127.0.0.1:8000/" + data.image} alt="Product" />
           </div>
           <div className="col-md-8 py-5">
             <h4>

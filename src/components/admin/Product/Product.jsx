@@ -83,7 +83,7 @@ const Product = () => {
                               <td>{val.original_price}</td>
                               <td>{val.quantity}</td>
                               <td>{val.description}</td>
-                              <td>{val.status == 1 ? "Hidden" : "Shown"}</td>
+                              <td>{val.status === 1 ? "Hidden" : "Shown"}</td>
                               <td>
                                 <Link
                                   className="btn btn-primary btn-sm"
