@@ -1,10 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [cartItem, setCartItem] = useState([]);
+  useEffect(() => {
+    axios.get("/fetch-cart-data").then((res) => {
+      if (res.data.status === true) {
+        setCartItem(res.data.data);
+      }
+    });
+  }, []);
   const navigate = useNavigate();
   const logoutForm = (e) => {
     e.preventDefault();
@@ -18,6 +26,16 @@ const Navbar = () => {
       }
     });
   };
+  let cartCount = "";
+  if (cartItem.length > 0) {
+    cartCount = (
+      <label className="badge btn btn-danger position-absolute">
+        {cartItem.length}
+      </label>
+    );
+  } else {
+    cartCount = "";
+  }
   var AuthButton = "";
   if (!localStorage.getItem("token")) {
     AuthButton = (
@@ -36,15 +54,26 @@ const Navbar = () => {
     );
   } else {
     AuthButton = (
-      <li className="nav-item">
-        <button
-          type="button"
-          onClick={logoutForm}
-          className="nav-link btn btn-danger btn-sm text-white"
-        >
-          Logout
-        </button>
-      </li>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link
+            to="/show-cart-item"
+            className="nav-link btn btn-success text-white mx-2"
+          >
+            <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+            {cartCount}
+          </Link>
+        </li>
+        <li className="nav-item mx-4">
+          <button
+            type="button"
+            onClick={logoutForm}
+            className="nav-link btn btn-danger btn-sm text-white"
+          >
+            Logout
+          </button>
+        </li>
+      </ul>
     );
   }
   return (
@@ -72,7 +101,17 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="#">
+              <Link className="nav-link" aria-current="page" to="/about">
+                About
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/contact">
+                Contact
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/collections">
                 Collection
               </Link>
             </li>

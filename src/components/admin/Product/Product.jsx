@@ -6,28 +6,29 @@ import Footer from "../../../layouts/admin/Footer";
 import Navbar from "../../../layouts/admin/Navbar";
 import Sidebar from "../../../layouts/admin/Sidebar";
 
-const ViewCategory = () => {
+const Product = () => {
   const [item, setData] = useState([""]);
   const loadDataOnlyOnce = () => {
-    axios.get("/view-category").then((data) => {
+    axios.get("/fetch-all-products").then((data) => {
       if (data.data.status === true) {
         setData(data.data.data);
       }
     });
-  }
+  };
 
   useEffect(() => {
     loadDataOnlyOnce();
   }, []);
 
-  const deleteCategory=(val)=>{
-    axios.get("/delete-category/"+val).then((data) => {
+  const deleteProduct = (val) => {
+    axios.get("/delete-product/" + val).then((data) => {
       if (data.data.status === true) {
-        swal("Success",data.data.message,"success");
+        swal("Success", data.data.message, "success");
         loadDataOnlyOnce();
       }
     });
-  }
+  };
+  
   return (
     <div className="sb-nav-fixed">
       <Navbar />
@@ -42,7 +43,7 @@ const ViewCategory = () => {
                 <div className="col-md-10">
                   <div className="card mb-4">
                     <div className="card-header">
-                      <h2>Category List</h2>
+                      <h2>Products List</h2>
                     </div>
                     <div className="card-body">
                       <table className="table table-bordered">
@@ -51,6 +52,9 @@ const ViewCategory = () => {
                             <th>SI. No.</th>
                             <th>Name</th>
                             <th>Slug</th>
+                            <th>Selling Price</th>
+                            <th>Original Price</th>
+                            <th>Quantity</th>
                             <th>Description</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -61,6 +65,9 @@ const ViewCategory = () => {
                             <th>SI. No.</th>
                             <th>Name</th>
                             <th>Slug</th>
+                            <th>Selling Price</th>
+                            <th>Original Price</th>
+                            <th>Quantity</th>
                             <th>Description</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -72,20 +79,32 @@ const ViewCategory = () => {
                               <td>{key + 1}</td>
                               <td>{val.name}</td>
                               <td>{val.slug}</td>
+                              <td>{val.selling_price}</td>
+                              <td>{val.original_price}</td>
+                              <td>{val.quantity}</td>
                               <td>{val.description}</td>
                               <td>{val.status == 1 ? "Hidden" : "Shown"}</td>
                               <td>
                                 <Link
-                                  className="btn btn-success btn-sm"
-                                  to={`/admin/edit-category/${val.id}`}
+                                  className="btn btn-primary btn-sm"
+                                  to={`/admin/view-product-detail/${val.id}`}
+                                >
+                                  <i
+                                    className="fa fa-eye"
+                                    aria-hidden="true"
+                                  ></i>
+                                </Link>
+                                <Link
+                                  className="btn btn-success btn-sm mx-2"
+                                  to={`/admin/edit-product/${val.id}`}
                                 >
                                   <i className="fa fa-edit"></i>
                                 </Link>
                                 <button
                                   type="button"
-                                  className="btn btn-danger mx-2 btn-sm"
+                                  className="btn btn-danger btn-sm"
                                   onClick={() => {
-                                    deleteCategory(val.id);
+                                    deleteProduct(val.id);
                                   }}
                                 >
                                   <i className="fa fa-trash"></i>
@@ -107,4 +126,4 @@ const ViewCategory = () => {
     </div>
   );
 };
-export default ViewCategory;
+export default Product;
